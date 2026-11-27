@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Presentación Interactiva</title>
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+
+  <!-- ================================================================
+       PORTADA / PANTALLA DE INICIO
+       El clic en este botón desbloquea el audio del navegador.
+       ================================================================ -->
+  <section id="intro" class="intro">
+    <div class="intro__inner">
+      <p class="intro__kicker">Bienvenida</p>
+      <h1 class="intro__title">Mi Presentación</h1>
+      <p class="intro__sub">Una experiencia con música y sonido. Usa auriculares o sube el volumen.</p>
+      <button id="startBtn" class="btn-start" type="button">
+        <span class="btn-start__icon" aria-hidden="true">▶</span>
+        Comenzar presentación
+      </button>
+      <p class="intro__hint">Navega con ← → , barra espaciadora o tocando la pantalla</p>
+    </div>
+  </section>
+
+  <!-- ================================================================
+       DECK DE DIAPOSITIVAS
+
+       >>> CÓMO ASIGNAR AUDIO A CADA DIAPOSITIVA <<<
+
+       data-music = ruta relativa al MP3 de música de fondo.
+                    Si una diapositiva NO tiene data-music, sigue sonando
+                    la música anterior (sin cortes).
+                    Si cambia respecto a la anterior → fade out + fade in.
+
+       data-sfx   = efecto de sonido que se dispara AL ENTRAR en la slide.
+                    Usa un nombre de los registrados en js/app.js (SFX).
+
+       En elementos clicables: data-click-sfx="nombre" dispara el efecto
+       al hacer clic/tocar ese elemento.
+       ================================================================ -->
+  <main id="deck" class="deck" hidden>
+
+    <!-- ---------- Diapositiva 1 ---------- -->
+    <section class="slide slide--hero" data-music="./assets/audio/musica-1.mp3" data-sfx="whoosh">
+      <div class="slide__content">
+        <p class="eyebrow">Capítulo 01</p>
+        <h2 class="headline">Todo empieza<br /><em>con una idea</em></h2>
+        <p class="lede">Una portada limpia, con un gradiente animado y tipografía grande. Edita este texto a tu gusto.</p>
+      </div>
+      <div class="orb orb--a" aria-hidden="true"></div>
+      <div class="orb orb--b" aria-hidden="true"></div>
+    </section>
+
+    <!-- ---------- Diapositiva 2 ---------- -->
+    <section class="slide slide--split" data-sfx="pop">
+      <div class="slide__content">
+        <p class="eyebrow">Capítulo 02</p>
+        <h2 class="headline">Tres ideas clave</h2>
+        <!-- Las tarjetas son clicables y suenan al pulsarlas -->
+        <div class="cards">
+          <button class="card" data-click-sfx="click">
+            <span class="card__num">01</span>
+            <h3>Sencillo</h3>
+            <p>HTML, CSS y JS puro. Sin dependencias ni compilación.</p>
+          </button>
+          <button class="card" data-click-sfx="click">
+            <span class="card__num">02</span>
+            <h3>Sonoro</h3>
+            <p>Música por diapositiva con transiciones suaves y efectos.</p>
+          </button>
+          <button class="card" data-click-sfx="click">
+            <span class="card__num">03</span>
+            <h3>Portátil</h3>
+            <p>Rutas relativas: funciona en GitHub Pages o Netlify tal cual.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- Diapositiva 3: cambia la música ---------- -->
+    <section class="slide slide--quote" data-music="./assets/audio/musica-2.mp3" data-sfx="chime">
+      <div class="slide__content">
+        <blockquote class="quote">
+          “La música es el silencio entre las notas.”
+        </blockquote>
+        <p class="quote__author">— Claude Debussy</p>
+        <p class="note">Esta diapositiva cambia la música de fondo con un fundido de 1,5 s.</p>
+      </div>
+    </section>
+
+    <!-- ---------- Diapositiva 4: cierre ---------- -->
+    <section class="slide slide--final" data-music="./assets/audio/musica-final.mp3" data-sfx="applause">
+      <div class="slide__content">
+        <h2 class="headline headline--xl">Gracias</h2>
+        <p class="lede">Pulsa el botón para repetir la presentación desde el principio.</p>
+        <button class="btn-ghost" id="restartBtn" type="button" data-click-sfx="click">Volver a empezar</button>
+      </div>
+      <div class="orb orb--c" aria-hidden="true"></div>
+    </section>
+
+  </main>
+
+  <!-- ================= Controles flotantes ================= -->
+  <button id="muteBtn" class="mute-btn" type="button" hidden
+          aria-label="Silenciar audio" title="Silenciar / activar audio (M)">
+    <svg class="icon icon--on" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/>
+    </svg>
+    <svg class="icon icon--off" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l5 6"/><path d="M22 9l-5 6"/>
+    </svg>
+  </button>
+
+  <div id="hud" class="hud" hidden>
+    <span id="slideNum" class="hud__num">1</span>
+    <span class="hud__sep">/</span>
+    <span id="slideTotal" class="hud__total">4</span>
+  </div>
+
+  <div id="progress" class="progress" hidden><div id="progressBar" class="progress__bar"></div></div>
+
+  <!-- Flechas de navegación -->
+  <button id="prevBtn" class="nav-arrow nav-arrow--prev" type="button" hidden aria-label="Anterior">‹</button>
+  <button id="nextBtn" class="nav-arrow nav-arrow--next" type="button" hidden aria-label="Siguiente">›</button>
+
+  <script src="./js/app.js"></script>
+</body>
+</html>

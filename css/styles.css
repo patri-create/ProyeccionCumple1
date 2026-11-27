@@ -1,0 +1,327 @@
+/* =================================================================
+   Presentación interactiva — estilos
+   Paleta y tipografía editables desde las variables de :root
+   ================================================================= */
+
+:root {
+  --bg:        #0a0a12;
+  --bg-2:      #141428;
+  --ink:       #f4f4f8;
+  --ink-dim:   rgba(244, 244, 248, 0.62);
+  --accent:    #ff7a59;
+  --accent-2:  #6ea8ff;
+  --line:      rgba(244, 244, 248, 0.14);
+  --fade:      700ms;
+  --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+  --font:      "Inter", "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --serif:     "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --gutter:    clamp(20px, 6vw, 96px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* `display` explícito en los controles ganaría al atributo hidden: lo forzamos */
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+body { overscroll-behavior: none; }
+
+button { font: inherit; color: inherit; cursor: pointer; }
+
+/* ============================ PORTADA ============================ */
+.intro {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: var(--gutter);
+  background:
+    radial-gradient(120% 90% at 20% 10%, rgba(110, 168, 255, 0.22), transparent 60%),
+    radial-gradient(100% 80% at 85% 85%, rgba(255, 122, 89, 0.22), transparent 60%),
+    linear-gradient(160deg, var(--bg), var(--bg-2));
+  z-index: 60;
+  transition: opacity var(--fade) var(--ease), visibility var(--fade);
+}
+.intro.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+.intro__inner { max-width: 44rem; animation: rise 900ms var(--ease) both; }
+
+.intro__kicker {
+  margin: 0 0 1rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.intro__title {
+  margin: 0;
+  font-size: clamp(2.8rem, 9vw, 6.5rem);
+  line-height: 0.95;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.intro__sub {
+  margin: 1.4rem auto 2.6rem;
+  max-width: 32rem;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+.btn-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.05rem 2.4rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #0a0a12;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.12);
+}
+.btn-start:hover  { transform: translateY(-2px) scale(1.02); box-shadow: 0 16px 50px rgba(255,255,255,0.2); }
+.btn-start:active { transform: translateY(0) scale(0.99); }
+.btn-start__icon  { font-size: 0.8em; }
+
+.intro__hint { margin-top: 2rem; font-size: 0.82rem; color: rgba(244,244,248,0.4); }
+
+/* ========================== DIAPOSITIVAS ========================== */
+.deck { position: fixed; inset: 0; width: 100vw; height: 100vh; height: 100dvh; }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: var(--gutter);
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.03);
+  transition: opacity var(--fade) var(--ease),
+              transform var(--fade) var(--ease),
+              visibility var(--fade);
+  overflow: hidden;
+}
+.slide.is-active { opacity: 1; visibility: visible; transform: none; }
+
+/* Los hijos entran escalonados cuando la slide se activa */
+.slide__content { position: relative; z-index: 2; width: 100%; max-width: 68rem; }
+.slide.is-active .slide__content > * { animation: rise 760ms var(--ease) both; }
+.slide.is-active .slide__content > *:nth-child(2) { animation-delay: 110ms; }
+.slide.is-active .slide__content > *:nth-child(3) { animation-delay: 210ms; }
+.slide.is-active .slide__content > *:nth-child(4) { animation-delay: 300ms; }
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ---------- Tipografía compartida ---------- */
+.eyebrow {
+  margin: 0 0 1.1rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.headline {
+  margin: 0;
+  font-size: clamp(2.4rem, 7.5vw, 5.4rem);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+.headline--xl { font-size: clamp(3.4rem, 13vw, 9rem); }
+.headline em { font-style: normal; color: var(--accent); }
+.lede {
+  margin: 1.5rem 0 0;
+  max-width: 36rem;
+  font-size: clamp(1rem, 1.7vw, 1.25rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+}
+.note { margin-top: 2.5rem; font-size: 0.8rem; color: rgba(244,244,248,0.35); }
+
+/* ---------- Fondos por diapositiva ---------- */
+.slide--hero  { background: linear-gradient(150deg, #0a0a12, #16162e 55%, #241a30); }
+.slide--split { background: linear-gradient(150deg, #0d1020, #101a2c); }
+.slide--quote { background: linear-gradient(150deg, #1a1020, #2a1220 60%, #0d0a14); }
+.slide--final { background: linear-gradient(150deg, #101428, #1d2240 50%, #2a1c2c); text-align: center; }
+.slide--final .lede { margin-inline: auto; }
+
+/* ---------- Orbes decorativos ---------- */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.5;
+  animation: float 16s ease-in-out infinite;
+}
+.orb--a { width: 42vw; height: 42vw; background: #6ea8ff; top: -12vw; right: -8vw; }
+.orb--b { width: 34vw; height: 34vw; background: #ff7a59; bottom: -12vw; left: -6vw; animation-delay: -7s; }
+.orb--c { width: 55vw; height: 55vw; background: #a070ff; bottom: -28vw; left: 22vw; animation-delay: -4s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(3vw, -4vw) scale(1.12); }
+}
+
+/* ---------- Tarjetas (slide 2) ---------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.1rem;
+  margin-top: 2.8rem;
+}
+.card {
+  text-align: left;
+  padding: 1.6rem 1.5rem 1.7rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(10px);
+  transition: transform 300ms var(--ease), border-color 300ms, background 300ms;
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 122, 89, 0.55);
+  background: rgba(255, 255, 255, 0.07);
+}
+.card:active { transform: translateY(-2px) scale(0.99); }
+.card__num { display: block; font-size: 0.72rem; letter-spacing: 0.2em; color: var(--accent-2); }
+.card h3 { margin: 0.7rem 0 0.5rem; font-size: 1.22rem; letter-spacing: -0.02em; }
+.card p  { margin: 0; font-size: 0.93rem; line-height: 1.55; color: var(--ink-dim); }
+
+/* ---------- Cita (slide 3) ---------- */
+.quote {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 5.2vw, 3.8rem);
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  max-width: 24ch;
+}
+.quote__author { margin-top: 1.6rem; font-size: 0.95rem; letter-spacing: 0.1em; color: var(--accent); }
+
+/* ---------- Botón fantasma ---------- */
+.btn-ghost {
+  margin-top: 2.4rem;
+  padding: 0.85rem 2rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  font-size: 0.95rem;
+  transition: background 260ms, border-color 260ms, transform 260ms var(--ease);
+}
+.btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: var(--ink); transform: translateY(-2px); }
+
+/* ======================= CONTROLES FLOTANTES ======================= */
+.mute-btn {
+  position: fixed;
+  right: clamp(14px, 2.4vw, 28px);
+  bottom: clamp(14px, 2.4vw, 28px);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(10, 10, 18, 0.5);
+  backdrop-filter: blur(12px);
+  opacity: 0.45;
+  transition: opacity 260ms, transform 260ms var(--ease), background 260ms;
+  z-index: 70;
+}
+.mute-btn:hover { opacity: 1; transform: scale(1.08); background: rgba(10,10,18,0.8); }
+
+.icon { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icon--off { display: none; }
+.mute-btn.is-muted .icon--on  { display: none; }
+.mute-btn.is-muted .icon--off { display: block; }
+.mute-btn.is-muted { opacity: 0.85; color: var(--accent); }
+
+/* Indicador de diapositiva */
+.hud {
+  position: fixed;
+  left: clamp(14px, 2.4vw, 28px);
+  bottom: clamp(14px, 2.4vw, 28px);
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  z-index: 70;
+  user-select: none;
+}
+.hud__num   { font-size: 1.15rem; font-weight: 600; color: var(--ink); }
+.hud__sep,
+.hud__total { opacity: 0.55; }
+
+/* Barra de progreso */
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.08);
+  z-index: 70;
+}
+.progress__bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  transition: width var(--fade) var(--ease);
+}
+
+/* Flechas */
+.nav-arrow {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  padding-bottom: 4px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: rgba(10,10,18,0.35);
+  backdrop-filter: blur(10px);
+  font-size: 1.6rem;
+  line-height: 1;
+  opacity: 0.25;
+  transition: opacity 260ms, background 260ms;
+  z-index: 70;
+}
+.nav-arrow:hover { opacity: 1; background: rgba(10,10,18,0.75); }
+.nav-arrow--prev { left: clamp(10px, 1.8vw, 22px); }
+.nav-arrow--next { right: clamp(10px, 1.8vw, 22px); }
+.nav-arrow[disabled] { opacity: 0.08; pointer-events: none; }
+
+@media (max-width: 700px) {
+  .nav-arrow { display: none; }
+  .cards { margin-top: 2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
