@@ -3,107 +3,262 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Presentación Interactiva</title>
+  <title>EXPEDIENTE CLASIFICADO — Agente [NOMBRE]</title>
+  <meta name="description" content="Dossier clasificado. Nivel de acceso restringido." />
   <link rel="stylesheet" href="./css/styles.css" />
 </head>
 <body>
 
-  <!-- ================================================================
-       PORTADA / PANTALLA DE INICIO
-       El clic en este botón desbloquea el audio del navegador.
-       ================================================================ -->
+<!-- =====================================================================
+     GUÍA RÁPIDA DE EDICIÓN
+
+     1. Busca los huecos marcados con corchetes: [NOMBRE], [EDAD], [FECHA]...
+        Están todos envueltos en <span class="ph">...</span> para que los
+        veas resaltados en pantalla. Al sustituir el texto puedes dejar
+        el <span class="ph"> o quitarlo: es solo un realce visual.
+     2. Música: atributo data-music de cada <section class="slide">.
+     3. Efectos: atributo data-sfx (al entrar) y data-click-sfx (al pulsar).
+     4. Foto del agente: busca "FOTO DEL AGENTE" más abajo.
+     ===================================================================== -->
+
+  <!-- ================== PANTALLA DE ACCESO (PORTADA) ================== -->
   <section id="intro" class="intro">
+    <div class="scanlines" aria-hidden="true"></div>
     <div class="intro__inner">
-      <p class="intro__kicker">Bienvenida</p>
-      <h1 class="intro__title">Mi Presentación</h1>
-      <p class="intro__sub">Una experiencia con música y sonido. Usa auriculares o sube el volumen.</p>
+      <div class="seal" aria-hidden="true">
+        <svg viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="46" />
+          <circle cx="50" cy="50" r="34" />
+          <circle cx="50" cy="50" r="7" />
+          <path d="M50 4v20M50 76v20M4 50h20M76 50h20" />
+        </svg>
+      </div>
+      <p class="intro__kicker">Agencia Central de Celebraciones · Dpto. de Operaciones Festivas</p>
+      <h1 class="intro__title">Expediente<br /><span class="flicker">Clasificado</span></h1>
+      <p class="intro__code">N.º DE CASO <span class="ph">[00-000]</span> · NIVEL DE ACCESO: MÁXIMO</p>
+      <p class="intro__sub">
+        El contenido de este dossier es confidencial. Su apertura queda registrada.
+        Active el audio: la transmisión incluye canal sonoro.
+      </p>
       <button id="startBtn" class="btn-start" type="button">
-        <span class="btn-start__icon" aria-hidden="true">▶</span>
-        Comenzar presentación
+        <span class="btn-start__dot" aria-hidden="true"></span>
+        Iniciar desencriptado
       </button>
-      <p class="intro__hint">Navega con ← → , barra espaciadora o tocando la pantalla</p>
+      <p class="intro__hint">← → o barra espaciadora para avanzar · M silencia · F pantalla completa</p>
     </div>
   </section>
 
-  <!-- ================================================================
-       DECK DE DIAPOSITIVAS
-
-       >>> CÓMO ASIGNAR AUDIO A CADA DIAPOSITIVA <<<
-
-       data-music = ruta relativa al MP3 de música de fondo.
-                    Si una diapositiva NO tiene data-music, sigue sonando
-                    la música anterior (sin cortes).
-                    Si cambia respecto a la anterior → fade out + fade in.
-
-       data-sfx   = efecto de sonido que se dispara AL ENTRAR en la slide.
-                    Usa un nombre de los registrados en js/app.js (SFX).
-
-       En elementos clicables: data-click-sfx="nombre" dispara el efecto
-       al hacer clic/tocar ese elemento.
-       ================================================================ -->
+  <!-- ========================= DIAPOSITIVAS ========================= -->
   <main id="deck" class="deck" hidden>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
 
-    <!-- ---------- Diapositiva 1 ---------- -->
-    <section class="slide slide--hero" data-music="./assets/audio/musica-1.mp3" data-sfx="whoosh">
-      <div class="slide__content">
-        <p class="eyebrow">Capítulo 01</p>
-        <h2 class="headline">Todo empieza<br /><em>con una idea</em></h2>
-        <p class="lede">Una portada limpia, con un gradiente animado y tipografía grande. Edita este texto a tu gusto.</p>
+    <!-- ============ 01 · ACCESO CONCEDIDO ============ -->
+    <section class="slide slide--boot" data-music="./assets/audio/musica-intro.mp3" data-sfx="access">
+      <div class="slide__content slide__content--center">
+        <div class="terminal">
+          <p class="terminal__line" data-type="&gt; Estableciendo conexión segura..."></p>
+          <p class="terminal__line" data-type="&gt; Verificando huella biométrica......... CORRECTA" data-type-delay="1400"></p>
+          <p class="terminal__line" data-type="&gt; Descifrando expediente................ 100%" data-type-delay="2900"></p>
+        </div>
+        <h2 class="granted">Acceso concedido</h2>
+        <p class="lede">Bienvenida al expediente del agente que hoy cumple <span class="ph">[EDAD]</span> años.</p>
       </div>
-      <div class="orb orb--a" aria-hidden="true"></div>
-      <div class="orb orb--b" aria-hidden="true"></div>
     </section>
 
-    <!-- ---------- Diapositiva 2 ---------- -->
-    <section class="slide slide--split" data-sfx="pop">
+    <!-- ============ 02 · PERFIL DEL AGENTE ============ -->
+    <section class="slide slide--profile" data-sfx="scan">
       <div class="slide__content">
-        <p class="eyebrow">Capítulo 02</p>
-        <h2 class="headline">Tres ideas clave</h2>
-        <!-- Las tarjetas son clicables y suenan al pulsarlas -->
-        <div class="cards">
-          <button class="card" data-click-sfx="click">
-            <span class="card__num">01</span>
-            <h3>Sencillo</h3>
-            <p>HTML, CSS y JS puro. Sin dependencias ni compilación.</p>
-          </button>
-          <button class="card" data-click-sfx="click">
-            <span class="card__num">02</span>
-            <h3>Sonoro</h3>
-            <p>Música por diapositiva con transiciones suaves y efectos.</p>
-          </button>
-          <button class="card" data-click-sfx="click">
-            <span class="card__num">03</span>
-            <h3>Portátil</h3>
-            <p>Rutas relativas: funciona en GitHub Pages o Netlify tal cual.</p>
-          </button>
+        <p class="eyebrow">Sección 01 — Identificación del sujeto</p>
+        <div class="profile">
+
+          <!-- ---- FOTO DEL AGENTE ----
+               Sustituye el <div class="photo__placeholder"> por:
+               <img src="./assets/img/agente.jpg" alt="" class="photo__img" />
+               (crea la carpeta assets/img/ y pon ahí la foto) -->
+          <figure class="photo">
+            <div class="photo__frame">
+              <div class="photo__placeholder">
+                <svg viewBox="0 0 64 64" aria-hidden="true">
+                  <circle cx="32" cy="23" r="12" />
+                  <path d="M10 58c0-12 10-19 22-19s22 7 22 19" />
+                </svg>
+                <span>IMAGEN<br />PENDIENTE</span>
+              </div>
+              <div class="photo__scan" aria-hidden="true"></div>
+              <span class="corner corner--tl"></span><span class="corner corner--tr"></span>
+              <span class="corner corner--bl"></span><span class="corner corner--br"></span>
+            </div>
+            <figcaption>CAPTURA DE VIGILANCIA · <span class="ph">[LUGAR]</span></figcaption>
+          </figure>
+
+          <dl class="datasheet">
+            <div class="datasheet__row"><dt>Nombre en clave</dt><dd class="hi"><span class="ph">[NOMBRE EN CLAVE]</span></dd></div>
+            <div class="datasheet__row"><dt>Identidad real</dt><dd><span class="ph">[NOMBRE COMPLETO]</span></dd></div>
+            <div class="datasheet__row"><dt>Edad</dt><dd><span class="counter" data-count="30">0</span> años<!-- cambia data-count por la edad real --></dd></div>
+            <div class="datasheet__row"><dt>Fecha de activación</dt><dd><span class="ph">[FECHA DE NACIMIENTO]</span></dd></div>
+            <div class="datasheet__row"><dt>Base de operaciones</dt><dd><span class="ph">[CIUDAD]</span></dd></div>
+            <div class="datasheet__row"><dt>Señas particulares</dt><dd><span class="ph">[ALGO QUE LA DEFINA]</span></dd></div>
+            <div class="datasheet__row"><dt>Estado</dt><dd><span class="badge badge--live">EN ACTIVO</span></dd></div>
+          </dl>
         </div>
       </div>
     </section>
 
-    <!-- ---------- Diapositiva 3: cambia la música ---------- -->
-    <section class="slide slide--quote" data-music="./assets/audio/musica-2.mp3" data-sfx="chime">
+    <!-- ============ 03 · HISTORIAL DE MISIONES ============ -->
+    <section class="slide slide--timeline" data-music="./assets/audio/musica-tension.mp3" data-sfx="beep">
       <div class="slide__content">
-        <blockquote class="quote">
-          “La música es el silencio entre las notas.”
-        </blockquote>
-        <p class="quote__author">— Claude Debussy</p>
-        <p class="note">Esta diapositiva cambia la música de fondo con un fundido de 1,5 s.</p>
+        <p class="eyebrow">Sección 02 — Historial de operaciones</p>
+        <h2 class="headline">Misiones <em>completadas</em></h2>
+        <ol class="timeline">
+          <li class="timeline__item">
+            <span class="timeline__year"><span class="ph">[AÑO]</span></span>
+            <div class="timeline__body">
+              <h3>Operación <span class="ph">[NOMBRE]</span></h3>
+              <p><span class="ph">[Un recuerdo, un logro o una anécdota de ese año]</span></p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <span class="timeline__year"><span class="ph">[AÑO]</span></span>
+            <div class="timeline__body">
+              <h3>Operación <span class="ph">[NOMBRE]</span></h3>
+              <p><span class="ph">[Otro hito: un viaje, una mudanza, un trabajo nuevo]</span></p>
+            </div>
+          </li>
+          <li class="timeline__item">
+            <span class="timeline__year"><span class="ph">[AÑO]</span></span>
+            <div class="timeline__body">
+              <h3>Operación <span class="ph">[NOMBRE]</span></h3>
+              <p><span class="ph">[Algo divertido que solo entendáis vosotros]</span></p>
+            </div>
+          </li>
+          <li class="timeline__item timeline__item--now">
+            <span class="timeline__year">HOY</span>
+            <div class="timeline__body">
+              <h3>Operación Cumpleaños</h3>
+              <p>Misión en curso. Objetivo: pasárselo extraordinariamente bien.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- ---------- Diapositiva 4: cierre ---------- -->
-    <section class="slide slide--final" data-music="./assets/audio/musica-final.mp3" data-sfx="applause">
+    <!-- ============ 04 · CAPACIDADES ============ -->
+    <section class="slide slide--skills" data-sfx="beep">
       <div class="slide__content">
-        <h2 class="headline headline--xl">Gracias</h2>
-        <p class="lede">Pulsa el botón para repetir la presentación desde el principio.</p>
-        <button class="btn-ghost" id="restartBtn" type="button" data-click-sfx="click">Volver a empezar</button>
+        <p class="eyebrow">Sección 03 — Evaluación de capacidades</p>
+        <h2 class="headline">Perfil <em>táctico</em></h2>
+        <!-- Cambia el valor de --val (0 a 100) para ajustar cada barra -->
+        <ul class="skills">
+          <li class="skill" style="--val: 97">
+            <span class="skill__name"><span class="ph">[Habilidad 1]</span></span>
+            <span class="skill__track"><span class="skill__fill"></span></span>
+            <span class="skill__val">97</span>
+          </li>
+          <li class="skill" style="--val: 88">
+            <span class="skill__name"><span class="ph">[Habilidad 2]</span></span>
+            <span class="skill__track"><span class="skill__fill"></span></span>
+            <span class="skill__val">88</span>
+          </li>
+          <li class="skill" style="--val: 94">
+            <span class="skill__name"><span class="ph">[Habilidad 3]</span></span>
+            <span class="skill__track"><span class="skill__fill"></span></span>
+            <span class="skill__val">94</span>
+          </li>
+          <li class="skill" style="--val: 12">
+            <span class="skill__name">Puntualidad</span>
+            <span class="skill__track"><span class="skill__fill skill__fill--low"></span></span>
+            <span class="skill__val skill__val--low">12</span>
+          </li>
+        </ul>
+        <p class="note">Evaluación emitida por el Comité de Amigos. No admite recurso.</p>
       </div>
-      <div class="orb orb--c" aria-hidden="true"></div>
+    </section>
+
+    <!-- ============ 05 · DOCUMENTO CENSURADO ============ -->
+    <section class="slide slide--redacted" data-music="./assets/audio/musica-misterio.mp3" data-sfx="stamp">
+      <div class="slide__content">
+        <p class="eyebrow">Sección 04 — Informe parcialmente censurado</p>
+        <h2 class="headline">Lo que <em>no</em> consta en acta</h2>
+        <p class="redacted-hint">Pulsa sobre los bloques negros para desclasificar.</p>
+        <div class="dossier">
+          <p>
+            El sujeto fue visto por última vez en
+            <span class="redacted" data-click-sfx="reveal"><span class="ph">[LUGAR DIVERTIDO]</span></span>,
+            acompañado de <span class="redacted" data-click-sfx="reveal"><span class="ph">[PERSONA]</span></span>,
+            presuntamente tramando
+            <span class="redacted" data-click-sfx="reveal"><span class="ph">[ALGO ABSURDO]</span></span>.
+          </p>
+          <p>
+            Fuentes cercanas confirman que su mayor debilidad conocida es
+            <span class="redacted" data-click-sfx="reveal"><span class="ph">[DEBILIDAD]</span></span>
+            y que responde sin falta al nombre en clave
+            <span class="redacted" data-click-sfx="reveal"><span class="ph">[APODO]</span></span>.
+          </p>
+          <p>
+            La agencia considera este expediente
+            <span class="redacted" data-click-sfx="reveal">absolutamente entrañable</span>.
+          </p>
+        </div>
+        <div class="stamp" aria-hidden="true">ALTO SECRETO</div>
+      </div>
+    </section>
+
+    <!-- ============ 06 · TRANSMISIONES INTERCEPTADAS ============ -->
+    <section class="slide slide--messages" data-sfx="beep">
+      <div class="slide__content">
+        <p class="eyebrow">Sección 05 — Transmisiones interceptadas</p>
+        <h2 class="headline">Mensajes <em>cifrados</em></h2>
+        <!-- Duplica un <article class="msg"> por cada felicitación -->
+        <div class="messages">
+          <article class="msg">
+            <header><span class="msg__from"><span class="ph">[REMITENTE]</span></span><span class="msg__meta">CANAL SEGURO · 03:14</span></header>
+            <p><span class="ph">[Su mensaje de felicitación]</span></p>
+          </article>
+          <article class="msg">
+            <header><span class="msg__from"><span class="ph">[REMITENTE]</span></span><span class="msg__meta">CANAL SEGURO · 09:42</span></header>
+            <p><span class="ph">[Su mensaje de felicitación]</span></p>
+          </article>
+          <article class="msg">
+            <header><span class="msg__from"><span class="ph">[REMITENTE]</span></span><span class="msg__meta">CANAL SEGURO · 17:08</span></header>
+            <p><span class="ph">[Su mensaje de felicitación]</span></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 07 · NUEVA MISIÓN ============ -->
+    <section class="slide slide--briefing" data-music="./assets/audio/musica-accion.mp3" data-sfx="alert">
+      <div class="slide__content">
+        <p class="eyebrow eyebrow--alert">Prioridad máxima — Asignación inmediata</p>
+        <h2 class="headline">Nueva misión <em>asignada</em></h2>
+        <div class="briefing">
+          <div class="briefing__row"><span class="briefing__key">Nombre en clave</span><span class="briefing__val">OPERACIÓN <span class="ph">[NOMBRE]</span></span></div>
+          <div class="briefing__row"><span class="briefing__key">Fecha</span><span class="briefing__val"><span class="ph">[DÍA Y HORA]</span></span></div>
+          <div class="briefing__row"><span class="briefing__key">Punto de encuentro</span><span class="briefing__val"><span class="ph">[LUGAR]</span></span></div>
+          <div class="briefing__row"><span class="briefing__key">Código de vestimenta</span><span class="briefing__val"><span class="ph">[VESTIMENTA]</span></span></div>
+          <div class="briefing__row"><span class="briefing__key">Objetivo</span><span class="briefing__val"><span class="ph">[EL PLAN]</span></span></div>
+        </div>
+        <p class="selfdestruct">Este mensaje se autodestruirá en <span class="countdown" data-from="10">10</span>…</p>
+      </div>
+    </section>
+
+    <!-- ============ 08 · CIERRE ============ -->
+    <section class="slide slide--final" data-music="./assets/audio/musica-final.mp3" data-sfx="fanfare">
+      <div class="slide__content slide__content--center">
+        <p class="eyebrow">Misión cumplida</p>
+        <h2 class="headline headline--xl">Feliz cumpleaños,<br /><em>Agente <span class="ph">[NOMBRE]</span></em></h2>
+        <p class="lede"><span class="ph">[Tu dedicatoria final: una frase corta y buena]</span></p>
+        <div class="final__actions">
+          <button class="btn-ghost" id="restartBtn" type="button" data-click-sfx="click">Revisar expediente de nuevo</button>
+        </div>
+      </div>
+      <div class="radar" aria-hidden="true"><span></span></div>
     </section>
 
   </main>
 
-  <!-- ================= Controles flotantes ================= -->
+  <!-- ===================== CONTROLES FLOTANTES ===================== -->
   <button id="muteBtn" class="mute-btn" type="button" hidden
           aria-label="Silenciar audio" title="Silenciar / activar audio (M)">
     <svg class="icon icon--on" viewBox="0 0 24 24" aria-hidden="true">
@@ -115,14 +270,21 @@
   </button>
 
   <div id="hud" class="hud" hidden>
-    <span id="slideNum" class="hud__num">1</span>
+    <span class="hud__label">SECCIÓN</span>
+    <span id="slideNum" class="hud__num">01</span>
     <span class="hud__sep">/</span>
-    <span id="slideTotal" class="hud__total">4</span>
+    <span id="slideTotal" class="hud__total">08</span>
   </div>
 
   <div id="progress" class="progress" hidden><div id="progressBar" class="progress__bar"></div></div>
 
-  <!-- Flechas de navegación -->
+  <!-- Marco HUD: esquinas y sello de clasificación -->
+  <div id="frame" class="frame" hidden aria-hidden="true">
+    <span class="frame__c frame__c--tl"></span><span class="frame__c frame__c--tr"></span>
+    <span class="frame__c frame__c--bl"></span><span class="frame__c frame__c--br"></span>
+    <span class="frame__tag">CLASIFICADO · NO DIFUNDIR</span>
+  </div>
+
   <button id="prevBtn" class="nav-arrow nav-arrow--prev" type="button" hidden aria-label="Anterior">‹</button>
   <button id="nextBtn" class="nav-arrow nav-arrow--next" type="button" hidden aria-label="Siguiente">›</button>
 
